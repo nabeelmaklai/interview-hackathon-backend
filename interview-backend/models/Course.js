@@ -4,9 +4,8 @@ const Schema = mongoose.Schema
 const courseSchema = new Schema(
   {
     name: { type: String, required: true },
-    grades: [{ type: Schema.Types.ObjectId, ref: "Grade" }],
     students: [{
-      students:{ type: Schema.Types.ObjectId, ref: "Student" },
+      student:{ type: Schema.Types.ObjectId, ref: "Student" },
       grades: {type: Schema.Types.ObjectId, ref: "Grade"}
   }],
   },
