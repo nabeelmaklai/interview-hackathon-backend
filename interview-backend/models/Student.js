@@ -9,7 +9,7 @@ const studentSchema = new Schema(
     courses: [{ type: Schema.Types.ObjectId, ref: 'Course' }]
   },
   {
-    timestamps: true
+    timestamps: true  
   }
 )
 module.exports = mongoose.model('Student', studentSchema)

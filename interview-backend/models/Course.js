@@ -1,17 +1,19 @@
-const mongoose = require("mongoose")
-const Schema = mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
   {
     name: { type: String, required: true },
-    students: [{
-      student:{ type: Schema.Types.ObjectId, ref: "Student" },
-      grades: {type: Schema.Types.ObjectId, ref: "Grade"}
-  }],
+    students: [
+      {
+        student: { type: Schema.Types.ObjectId, ref: 'Student' },
+        grade: { type: Schema.Types.ObjectId, ref: 'Grade' }
+      }
+    ]
   },
   {
-    timestamps: true,
+    timestamps: true
   }
-)
+);
 
-module.exports = mongoose.model("Course", courseSchema)
+module.exports = mongoose.model('Course', courseSchema);
