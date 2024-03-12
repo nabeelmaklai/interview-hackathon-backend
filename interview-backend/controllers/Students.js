@@ -18,7 +18,30 @@ const createStudent = async (req, res) => {
   }
 }
 
+const getStudentDetails = async (req, res) => {
+  const studentId = req.params.id
+  try {
+    const student = await Student.findById(studentId).populate('courses')
+    res.send(student)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const updateStudentDetails = async (req, res) => {
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(req.params.id, {
+      $push: { courses: req.body.courseId }
+    })
+    res.send(updatedStudent)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   getStudents,
-  createStudent
+  createStudent,
+  getStudentDetails,
+  updateStudentDetails
 }

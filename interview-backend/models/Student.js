@@ -5,11 +5,11 @@ const studentSchema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
-    studentId: { type: Number, required: true },
+    studentId: { type: String, required: true },
     courses: [{ type: Schema.Types.ObjectId, ref: 'Course' }]
   },
   {
-    timestamps: true
+    timestamps: true  
   }
 )
 module.exports = mongoose.model('Student', studentSchema)
