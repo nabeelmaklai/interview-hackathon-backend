@@ -5,7 +5,10 @@ const courseSchema = new Schema(
   {
     name: { type: String, required: true },
     grades: [{ type: Schema.Types.ObjectId, ref: "Grade" }],
-    students: [{ type: Schema.Types.ObjectId, ref: "Student" }],
+    students: [{
+      students:{ type: Schema.Types.ObjectId, ref: "Student" },
+      grades: {type: Schema.Types.ObjectId, ref: "Grade"}
+  }],
   },
   {
     timestamps: true,
