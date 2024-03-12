@@ -11,4 +11,5 @@ const courseSchema = new Schema(
     timestamps: true,
   }
 )
+
 module.exports = mongoose.model("Course", courseSchema)
