@@ -1,4 +1,6 @@
 const Student = require('../models/Student')
+const Course = require('../models/Course')
+const Grade = require('../models/Grade')
 
 const getStudents = async (req, res) => {
   try {
@@ -21,7 +23,23 @@ const createStudent = async (req, res) => {
 const getStudentDetails = async (req, res) => {
   const studentId = req.params.id
   try {
-    const student = await Student.findById(studentId).populate('courses')
+    const student = await Student.findById(studentId).populate({
+      path: 'courses',
+      populate: [
+        {
+          path: 'students',
+          populate: {
+            path: 'student'
+          }
+        },
+        {
+          path: 'students',
+          populate: {
+            path: 'grade'
+          }
+        }
+      ]
+    })
     res.send(student)
   } catch (error) {
     console.log(error)
@@ -29,10 +47,26 @@ const getStudentDetails = async (req, res) => {
 }
 
 const updateStudentDetails = async (req, res) => {
+  console.log('our req.params', req.params)
+  console.log('our req.body', req.body)
   try {
+    await Course.updateOne(
+      { _id: req.body.course },
+      {
+        $push: {
+          students: {
+            student: req.params.id,
+            grade: req.body.grade
+          }
+        }
+      }
+    )
     const updatedStudent = await Student.findByIdAndUpdate(req.params.id, {
       $push: { courses: req.body.courseId }
     })
+
+    console.log(updatedStudent)
+    console.log(Course)
     res.send(updatedStudent)
   } catch (error) {
     console.log(error)
