@@ -15,20 +15,23 @@ const getAllCourses = async (req, res) => {
 const getCourseDetails = async (req, res) => {
   const courseId = req.params.id
   try {
-    const course = await Course.findById(courseId).populate([
-      {
-        path: 'students',
-        populate: {
-          path: 'student'
+    const course = await Course.findById(courseId).populate(
+      // "students.student", "students.grade"
+      [
+        {
+          path: 'students',
+          populate: {
+            path: 'student'
+          }
+        },
+        {
+          path: 'students',
+          populate: {
+            path: 'grade'
+          }
         }
-      },
-      {
-        path: 'students',
-        populate: {
-          path: 'grade'
-        }
-      }
-    ])
+      ]
+    )
     res.send(course)
   } catch (error) {
     console.log(error)
