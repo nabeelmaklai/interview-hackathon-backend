@@ -6,7 +6,6 @@ const Course = require('../models/Course')
 const getAllCourses = async (req, res) => {
   try {
     let courses = await Course.find().populate(
-      // "students.student", "students.grade"
       [
         {
           path: 'students',
@@ -32,7 +31,6 @@ const getCourseDetails = async (req, res) => {
   const courseId = req.params.id
   try {
     const course = await Course.findById(courseId).populate(
-      // "students.student", "students.grade"
       [
         {
           path: 'students',
