@@ -40,6 +40,26 @@ const getStudentDetails = async (req, res) => {
         }
       ]
     })
+
+    // recieved help from Zynb for the following code
+    if (student.courses.length > 0) {
+      let studentScore = 0
+      let allGrades = 0
+
+      for (const course of student.courses) {
+        for (const grade of course.students) {
+          if (grade && grade.student._id.toString() === studentId) {
+            studentScore += parseInt(grade.grade.score)
+            allGrades++
+          }
+        }
+      }
+
+      if (allGrades > 0) {
+        const totalGPA = (studentScore / allGrades).toFixed(3)
+        await Student.updateOne({ _id: studentId }, { GPA: totalGPA })
+      }
+    }
     res.send(student)
   } catch (error) {
     console.log(error)
